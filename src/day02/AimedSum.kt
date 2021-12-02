@@ -5,10 +5,7 @@ import base.Solution
 
 class AimedSum(challenge: Challenge): Solution(challenge) {
     override fun invoke() {
-        val example = challenge.readExampleAsList()
         check(solve(example) == 900)
-
-        val input = challenge.readInputAsList()
         println("Solution: ${solve(input)}")
     }
 

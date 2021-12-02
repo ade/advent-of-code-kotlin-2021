@@ -5,16 +5,17 @@ import base.Solution
 
 class DepthMeasurement(challenge: Challenge): Solution(challenge) {
     override fun invoke() {
-        val input = challenge.readInputAsIntList()
+        check(solve(exampleAsInts) == 7)
+        println("The number of increments is: ${solve(inputAsInts)}")
+    }
 
-        val result = input.reduceAdjacentToInt { accumulator, previous, current ->
+    private fun solve(inputAsInts: List<Int>): Int {
+        return inputAsInts.reduceAdjacentToInt { accumulator, previous, current ->
             if(current > previous)
                 accumulator + 1
             else
                 accumulator
         }
-
-        println("The number of increments is: $result")
     }
 }
 

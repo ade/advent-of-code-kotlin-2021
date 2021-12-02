@@ -1,8 +1,18 @@
 package base
 
-abstract class Solution(val challenge: Challenge) {
+abstract class Solution(private val challenge: Challenge) {
     abstract operator fun invoke()
 
-    protected fun readExampleAsList() = challenge.readExampleAsList()
-    protected fun readInputAsList() = challenge.readInputAsList()
+    protected val input
+        get() = challenge.fileAsList("input")
+
+    protected val inputAsInts
+        get() = input.map(String::toInt)
+
+    protected val example
+        get() = challenge.fileAsList("example")
+
+    protected val exampleAsInts
+        get() = example.map(String::toInt)
+
 }

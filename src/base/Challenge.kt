@@ -8,20 +8,10 @@ interface Challenge {
     val part1: Solution?
     val part2: Solution?
 
-    fun readExampleAsList() = readExampleAsList(day)
-    fun readInputAsList() = readInputAsList(day)
-    fun readInputAsIntList() = readInputAsList().map { it.toInt() }
+    fun fileAsList(file: String): List<String> = readDayFileAsList(day, file)
 
-    /**
-     * Reads lines from the given input txt file.
-     */
-    private fun readInputAsList(day: Int): List<String> {
-        val dayString = day.toString().padStart(2, '0')
-        return File("src/day${dayString}", "input$day.txt").readLines()
-    }
-
-    private fun readExampleAsList(day: Int): List<String> {
-        val dayString = day.toString().padStart(2, '0')
-        return File("src/day${dayString}", "example$day.txt").readLines()
+    private fun readDayFileAsList(day: Int, filename: String): List<String> {
+        val paddedDay = day.toString().padStart(2, '0')
+        return File("src/day${paddedDay}", "$filename$day.txt").readLines()
     }
 }

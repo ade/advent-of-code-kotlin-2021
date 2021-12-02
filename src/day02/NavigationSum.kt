@@ -5,10 +5,7 @@ import base.Solution
 
 class NavigationSum(challenge: Challenge): Solution(challenge) {
     override fun invoke() {
-        val example = readExampleAsList()
         check(solve(example) == 150)
-
-        val input = readInputAsList()
         println("Result: ${solve(input)}")
     }
 
