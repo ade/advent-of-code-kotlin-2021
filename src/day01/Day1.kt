@@ -1,7 +1,7 @@
 package day01
 
-import Challenge
-import Solution
+import base.Challenge
+import base.Solution
 
 class Day1: Challenge {
     override val day: Int = 1

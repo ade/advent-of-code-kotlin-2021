@@ -1,7 +1,7 @@
 package day01
 
-import Challenge
-import Solution
+import base.Challenge
+import base.Solution
 
 class DepthMeasurement(challenge: Challenge): Solution(challenge) {
     override fun invoke() {

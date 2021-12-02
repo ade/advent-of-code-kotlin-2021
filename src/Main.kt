@@ -1,8 +1,12 @@
+package base
+
 import day01.Day1
+import day02.Day2
 
 fun main(args: Array<String>) {
     val implementations: Map<Int, () -> Challenge> = mapOf(
-        1 to { Day1() }
+        1 to { Day1() },
+        2 to { Day2() }
     )
 
     val day = args.firstOrNull()?.toInt() ?: run {
@@ -17,7 +21,7 @@ fun main(args: Array<String>) {
 
     println("Day $day")
     println("Part 1")
-    challenge.part1()
+    challenge.part1?.invoke() ?: println("Not implemented")
     println("Part 2")
-    challenge.part2()
+    challenge.part2?.invoke() ?: println("Not implemented")
 }
