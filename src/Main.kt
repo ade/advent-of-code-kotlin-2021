@@ -1,12 +1,14 @@
 package base
 
+import base.day03.Day3
 import day01.Day1
 import day02.Day2
 
 fun main(args: Array<String>) {
     val implementations: Map<Int, () -> Challenge> = mapOf(
         1 to { Day1() },
-        2 to { Day2() }
+        2 to { Day2() },
+        3 to { Day3() }
     )
 
     val day = args.firstOrNull()?.toInt() ?: run {
