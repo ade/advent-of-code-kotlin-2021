@@ -15,15 +15,7 @@ class Day4Part1And2(challenge: Challenge, private val part2: Boolean): Solution(
 
     fun solve(input: List<String>): Int {
         val drawOrder = input.first().split(',').map(String::toInt)
-        val boardsCount = (input.size-1) / 6
-
-        val boardIndexes = (0 until boardsCount).map {
-            it * 6 + 2
-        }
-
-        val boards = boardIndexes.map {
-            Board.of(input.subList(it, it+5))
-        }
+        val boards = input.drop(1).chunked(6).map { Board.of(it.drop(1)) }
 
         val winners = mutableSetOf<Board>()
         drawOrder.forEach { draw ->
@@ -60,9 +52,10 @@ private class Board {
         }
 
         if(winResult == 0) {
-            val score = score()
-            if(score > 0) {
-                winResult = score * draw
+            score().let {
+                if(it > 0) {
+                    winResult = it * draw
+                }
             }
         }
 
@@ -70,20 +63,13 @@ private class Board {
     }
 
     private fun score(): Int {
-        val winning = (0..4).any { rowChecked(it) } || (0..4).any { columnChecked(it) }
-
+        val winning = (0..4).any { rowBingo(it) } || (0..4).any { columnBingo(it) }
         if(!winning) return 0
-
         return items.flatten().filter { !it.checked }.map { it.number }.sum()
     }
 
-    private fun rowChecked(y: Int): Boolean {
-        return (items[y].none { !it.checked })
-    }
-
-    private fun columnChecked(x: Int): Boolean {
-        return ((0..4).map { items[it][x] }.none { !it.checked })
-    }
+    private fun rowBingo(y: Int) = items[y].none { !it.checked }
+    private fun columnBingo(x: Int) = (0..4).map { items[it][x] }.none { !it.checked }
 
     private fun setValue(x: Int, y: Int, value: Int) {
         items[y][x].number = value
@@ -91,16 +77,13 @@ private class Board {
 
     companion object {
         fun of(list: List<String>): Board {
-            check(list.size == 5)
             val board = Board()
-
             list.forEachIndexed { y, it ->
                 val values = """(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)""".toRegex().find(it)!!.groupValues
-                (1..5).forEach { x ->
+                for(x in 1 .. 5) {
                     board.setValue(x-1, y, values[x].toInt())
                 }
             }
-
             return board
         }
     }
