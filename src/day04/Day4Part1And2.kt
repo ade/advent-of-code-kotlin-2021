@@ -65,7 +65,7 @@ private class Board {
     private fun score(): Int {
         val winning = (0..4).any { rowBingo(it) } || (0..4).any { columnBingo(it) }
         if(!winning) return 0
-        return items.flatten().filter { !it.checked }.map { it.number }.sum()
+        return items.flatten().filter { !it.checked }.sumOf { it.number }
     }
 
     private fun rowBingo(y: Int) = items[y].none { !it.checked }
