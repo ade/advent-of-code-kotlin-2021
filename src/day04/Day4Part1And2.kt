@@ -3,15 +3,18 @@ package base.day04
 import base.Challenge
 import base.Solution
 
-class Day4Part1(challenge: Challenge): Solution(challenge) {
+class Day4Part1And2(challenge: Challenge, private val part2: Boolean): Solution(challenge) {
     override fun invoke() {
-        check(solve(example) == 4512)
+        if(!part2)
+            check(solve(example) == 4512)
+        else
+            check(solve(example) == 1924)
+
         println("Result: ${solve(input)}")
     }
 
     fun solve(input: List<String>): Int {
         val drawOrder = input.first().split(',').map(String::toInt)
-
         val boardsCount = (input.size-1) / 6
 
         val boardIndexes = (0 until boardsCount).map {
@@ -22,13 +25,19 @@ class Day4Part1(challenge: Challenge): Solution(challenge) {
             Board.of(input.subList(it, it+5))
         }
 
-        return drawOrder.firstNotNullOf { draw ->
-            val winnerScore = boards.maxOf { board ->
+        val winners = mutableSetOf<Board>()
+        drawOrder.forEach { draw ->
+            boards.filter { board ->
                 board.consume(draw)
-                board.score()
+            }.forEach {
+                winners.add(it)
             }
+        }
 
-            if(winnerScore != 0) winnerScore * draw else null
+        return if(!part2) {
+            winners.first().winResult
+        } else {
+            winners.last().winResult
         }
     }
 }
@@ -40,15 +49,27 @@ private class Board {
         (1..5).map { Cell(0) }
     }
 
-    fun consume(draw: Int) {
+    var winResult = 0
+        private set
+
+    fun consume(draw: Int): Boolean {
         items.forEach { row ->
             row.forEach {
                 if(it.number == draw) it.checked = true
             }
         }
+
+        if(winResult == 0) {
+            val score = score()
+            if(score > 0) {
+                winResult = score * draw
+            }
+        }
+
+        return winResult != 0
     }
 
-    fun score(): Int {
+    private fun score(): Int {
         val winning = (0..4).any { rowChecked(it) } || (0..4).any { columnChecked(it) }
 
         if(!winning) return 0
