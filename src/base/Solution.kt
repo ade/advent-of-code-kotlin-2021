@@ -1,7 +1,14 @@
 package base
 
+import java.lang.IllegalStateException
+
 abstract class Solution(private val challenge: Challenge) {
     abstract operator fun invoke()
+
+    protected fun expect(actual: Long, expected: Long) {
+        if(actual != expected)
+            throw IllegalStateException("Actual: $actual, expected: $expected")
+    }
 
     protected val input
         get() = challenge.fileAsList("input")
