@@ -39,23 +39,6 @@ class Day5Part1And2(challenge: Challenge, val part2: Boolean): Solution(challeng
             map.paint(it.first, it.second)
         }
     }
-
-    private fun paintLineAlt(l: Line, map: CloudMap) {
-        if(l.x1 == l.x2 && l.y1 != l.y2) {
-            (l.y1 through l.y2).forEach { y -> map.paint(l.x1, y) }
-        } else if(l.y1 == l.y2) {
-            (l.x1 through l.x2).forEach { x -> map.paint(x, l.y1) }
-        } else {
-            if(!part2) return
-
-            //Assume 45 deg diagonal
-            val x = (l.x1 through l.x2).toList()
-
-            (l.y1 through l.y2).forEachIndexed { index, y ->
-                map.paint(x[index], y)
-            }
-        }
-    }
 }
 
 private data class Line(val x1: Int, val y1: Int, val x2: Int, val y2: Int) {
