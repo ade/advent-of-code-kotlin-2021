@@ -4,6 +4,7 @@ import base.day03.Day3
 import base.day04.Day4
 import base.day05.Day5
 import base.day06.Day6
+import base.day07.Day7
 import day01.Day1
 import day02.Day2
 
@@ -14,7 +15,8 @@ fun main(args: Array<String>) {
         3 to { Day3() },
         4 to { Day4() },
         5 to { Day5() },
-        6 to { Day6() }
+        6 to { Day6() },
+        7 to { Day7() }
     )
 
     val day = args.firstOrNull()?.toInt() ?: run {
