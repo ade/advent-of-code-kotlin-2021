@@ -6,5 +6,5 @@ import base.Solution
 class Day9: Challenge {
     override val day = 9
     override val part1 = Day9Part1(this)
-    override val part2 = null
+    override val part2 = Day9Part2(this)
 }
