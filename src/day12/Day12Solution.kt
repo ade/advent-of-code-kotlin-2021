@@ -3,9 +3,9 @@ package day12
 import base.Challenge
 import base.Solution
 
-class Day12Part1(challenge: Challenge): Solution(challenge) {
+class Day12Solution(challenge: Challenge, val part2: Boolean): Solution(challenge) {
     override fun invoke() {
-        expect(solve(example), 226)
+        expect(solve(example), if(!part2) 226 else 3509) // "Even larger" example
         println("Result: ${solve(input)}")
     }
 
@@ -33,19 +33,33 @@ class Day12Part1(challenge: Challenge): Solution(challenge) {
     }
 
     fun pathFinder(links: Map<Cave, List<Cave>>, history: List<Cave>, current: Cave): List<List<Cave>> {
-        val allExits = links[current]!!
+        if(current.end) return listOf(history + current)
 
-        //Don't allow re-entering previous room or going to a small room more than once
-        val exits = allExits.filter { it.big || !history.contains(it) }
+        val exits = links[current]!!.filter {
+            it.big ||
+                    if (part2) {
+                        when {
+                            (it.start || it.end) -> !history.contains(it)
+                            history.contains(it) -> !hasBeenTwiceToOneSmallCave(history + current)
+                            else -> true
+                        }
+                    } else
+                        !history.contains(it)
+        }
 
         return exits.map { exit ->
-            when {
-                exit.end -> {
-                    listOf((history + current) + exit)
-                }
-                else -> pathFinder(links, history + current, exit)
-            }
+            pathFinder(links, history + current, exit)
         }.flatten()
+    }
+
+    private fun hasBeenTwiceToOneSmallCave(history: List<Cave>): Boolean {
+        val counter = mutableMapOf<String, Int>()
+        history
+            .filter { !it.big }
+            .forEach {
+                counter[it.id] = counter.getOrDefault(it.id, 0) + 1
+            }
+        return counter.any { it.value > 1 }
     }
 }
 
@@ -55,4 +69,7 @@ data class Cave(val id: String) {
 
     val end: Boolean
         get() = id == "end"
+
+    val start: Boolean
+        get() = id == "start"
 }
