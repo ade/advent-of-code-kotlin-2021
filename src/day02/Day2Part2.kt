@@ -3,7 +3,7 @@ package day02
 import base.Challenge
 import base.Solution
 
-class AimedSum(challenge: Challenge): Solution(challenge) {
+class Day2Part2(challenge: Challenge): Solution(challenge) {
     override fun invoke() {
         check(solve(example) == 900)
         println("Solution: ${solve(input)}")

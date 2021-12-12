@@ -3,7 +3,7 @@ package day01
 import base.Challenge
 import base.Solution
 
-class DepthMeasurement(challenge: Challenge): Solution(challenge) {
+class Day1Part1(challenge: Challenge): Solution(challenge) {
     override fun invoke() {
         check(solve(exampleAsInts) == 7)
         println("The number of increments is: ${solve(inputAsInts)}")

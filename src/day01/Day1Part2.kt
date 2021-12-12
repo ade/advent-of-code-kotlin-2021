@@ -3,7 +3,7 @@ package day01
 import base.Challenge
 import base.Solution
 
-class ThreeMeasurementWindow(challenge: Challenge): Solution(challenge) {
+class Day1Part2(challenge: Challenge): Solution(challenge) {
     override fun invoke() {
         check(solve(exampleAsInts) == 5)
         println("The number of increments in three-value windows is: ${solve(inputAsInts)}")

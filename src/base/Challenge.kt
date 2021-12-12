@@ -2,11 +2,12 @@ package base
 
 import java.io.File
 
-interface Challenge {
-    val day: Int
+abstract class Challenge {
+    abstract val day: Int
 
-    val part1: Solution?
-    val part2: Solution?
+    open val part1: Solution? = null
+    open val part2: Solution? = null
+    open val both: Solution? = null
 
     fun fileAsList(file: String): List<String> = readDayFileAsList(day, file)
 

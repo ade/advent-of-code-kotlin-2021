@@ -8,6 +8,7 @@ import base.day07.Day7
 import base.day08.Day8
 import base.day09.Day9
 import base.day10.Day10
+import base.day11.Day11
 import day01.Day1
 import day02.Day2
 
@@ -22,7 +23,8 @@ fun main(args: Array<String>) {
         7 to { Day7() },
         8 to { Day8() },
         9 to { Day9() },
-        10 to { Day10() }
+        10 to { Day10() },
+        11 to { Day11() }
     )
 
     val day = args.firstOrNull()?.toInt() ?: run {
@@ -36,8 +38,12 @@ fun main(args: Array<String>) {
     }
 
     println("Day $day")
-    println("Part 1")
-    challenge.part1?.invoke() ?: println("Not implemented")
-    println("Part 2")
-    challenge.part2?.invoke() ?: println("Not implemented")
+    challenge.both?.let { solution ->
+        solution()
+    } ?: run {
+        println("Part 1")
+        challenge.part1?.invoke() ?: println("Not implemented")
+        println("Part 2")
+        challenge.part2?.invoke() ?: println("Not implemented")
+    }
 }

@@ -3,7 +3,7 @@ package day02
 import base.Challenge
 import base.Solution
 
-class NavigationSum(challenge: Challenge): Solution(challenge) {
+class Day2Part1(challenge: Challenge): Solution(challenge) {
     override fun invoke() {
         check(solve(example) == 150)
         println("Result: ${solve(input)}")
