@@ -12,6 +12,11 @@ abstract class Solution(private val challenge: Challenge) {
 
     protected fun expect(actual: Int, expected: Int) = expect(actual.toLong(), expected.toLong())
 
+    protected fun expect(actual: String, expected: String) {
+        if(actual != expected)
+            throw IllegalStateException("Actual: $actual, expected: $expected")
+    }
+
     protected val input
         get() = challenge.fileAsList("input")
 
