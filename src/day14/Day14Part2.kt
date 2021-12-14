@@ -25,7 +25,7 @@ class Day14Part2(challenge: Challenge): Solution(challenge) {
 
             // Pre-calculate which child pairs each pair will generate in an entry <String, List<String>>
             // e.g. "CH" -> ["CB", "BH"]
-            rule.key to pairsOf(spawn)
+            rule.key to spawn.windowed(2)
         }.toMap()
 
         //Initialize counter of all possible pairs. The rules are assumed to cover all possible pairs.
@@ -34,7 +34,7 @@ class Day14Part2(challenge: Challenge): Solution(challenge) {
         }.toMap().toMutableMap()
 
         //Populate the counter from the template
-        pairsOf(template).forEach {
+        template.windowed(2).forEach {
             pairCounts[it] = pairCounts[it]!! + 1L
         }
 
@@ -81,17 +81,5 @@ class Day14Part2(challenge: Challenge): Solution(challenge) {
         val leastCommon = occurrences.minOf { it }
 
         return mostCommon - leastCommon
-    }
-
-    /** Return all pairs found in a polymer string */
-    private fun pairsOf(polymer: String): List<String> {
-        return polymer.toCharArray().mapIndexed { index, char ->
-            if(index == polymer.lastIndex)
-                null
-            else {
-                val next = polymer[index + 1]
-                "$char$next"
-            }
-        }.filterNotNull()
     }
 }
